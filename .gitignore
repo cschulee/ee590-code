@@ -5,6 +5,7 @@
 *.elf
 *.out
 *.img
+*.bin
 
 # Precompiled Headers
 *.gch
