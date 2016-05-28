@@ -1,45 +1,38 @@
-
 /*
- * uart05.c
+ * bootstrap.h
  *
- * DESCRIPTION
- *
- *   This function sends a test pattern to the hardware UART
- *
- * PARAMETERS
- *
- *   None
- *
- * RETURN
- *
- *   Boolean status
- *
- * EXAMPLE
- *
- *   This function is not meant to be called by an operating system or other
- *   programs
- *
- *  NOTES
- *
- *    Refactored from original to use a header file for the forward declaration
- *    of the bootstrap functions
+ *  Created on: May 28, 2016
+ *      Author: christopherschulenberg
  */
 
-#include "bootstrap.h"
+#ifndef BOOTSTRAP_H_
+#define BOOTSTRAP_H_
 
-//------------------------------------------------------------------------
-int notmain ( void )
-{
-    uart_init();
-    hexstring(0x12345678);
-    hexstring(GETPC());
-    hexstring(GETCPSR());
-    return(0);
-}
+extern void PUT32 ( unsigned int, unsigned int );
+extern void PUT16 ( unsigned int, unsigned int );
+extern void PUT8 ( unsigned int, unsigned int );
+extern unsigned int GET32 ( unsigned int );
+extern unsigned int GETPC ( void );
+extern void dummy ( unsigned int );
+extern unsigned int BRANCHTO ( unsigned int );
+extern unsigned int GETCPSR ( void );
+extern void uart_init ( void );
+extern unsigned int uart_lcr ( void );
+extern void uart_flush ( void );
+extern void uart_send ( unsigned int );
+extern unsigned int uart_recv ( void );
+extern unsigned int uart_check ( void );
+extern void hexstring ( unsigned int );
+extern void hexstrings ( unsigned int );
+extern void timer_init ( void );
+extern unsigned int timer_tick ( void );
+extern void timer_init ( void );
+extern unsigned int timer_tick ( void );
+
+#endif /* BOOTSTRAP_H_ */
 
 /*
- * Original work Copyright (c) 2014 David Welch dwelch@dwelch.com
- * Modified work Copyright 2016 Chris Schulenberg christopher.s.schulenberg@gmail.com
+ * Copyright (c) 2016 Chris Schulenberg christopher.s.schulenberg@gmail.com
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
