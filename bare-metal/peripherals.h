@@ -1,35 +1,37 @@
 /*
- * bootstrap.h
+ * peripherals.h
  *
  *  Created on: May 28, 2016
  *      Author: christopher.s.schulenberg@gmail.com
  */
 
-#ifndef BOOTSTRAP_H_
-#define BOOTSTRAP_H_
+#ifndef PERIPHERALS_H_
+#define PERIPHERALS_H_
 
-extern void PUT32 ( unsigned int, unsigned int );
-extern void PUT16 ( unsigned int, unsigned int );
-extern void PUT8 ( unsigned int, unsigned int );
-extern unsigned int GET32 ( unsigned int );
-extern unsigned int GETPC ( void );
-extern void dummy ( unsigned int );
-extern unsigned int BRANCHTO ( unsigned int );
-extern unsigned int GETCPSR ( void );
-extern void uart_init ( void );
-extern unsigned int uart_lcr ( void );
-extern void uart_flush ( void );
-extern void uart_send ( unsigned int );
-extern unsigned int uart_recv ( void );
-extern unsigned int uart_check ( void );
-extern void hexstring ( unsigned int );
-extern void hexstrings ( unsigned int );
-extern void timer_init ( void );
-extern unsigned int timer_tick ( void );
-extern void timer_init ( void );
-extern unsigned int timer_tick ( void );
+// BCM2837
+#define PBASE                    0x3F000000
+#define RPI_SYSTIMER_BASE (PBASE+0x00003000)
+#define ARM_TIMER_CTL     (PBASE+0x0000B408)
+#define ARM_TIMER_CNT     (PBASE+0x0000B420)
+#define GPFSEL1           (PBASE+0x00200004)
+#define GPSET0            (PBASE+0x0020001C)
+#define GPCLR0            (PBASE+0x00200028)
+#define GPPUD             (PBASE+0x00200094)
+#define GPPUDCLK0         (PBASE+0x00200098)
+#define AUX_ENABLES       (PBASE+0x00215004)
+#define AUX_MU_IO_REG     (PBASE+0x00215040)
+#define AUX_MU_IER_REG    (PBASE+0x00215044)
+#define AUX_MU_IIR_REG    (PBASE+0x00215048)
+#define AUX_MU_LCR_REG    (PBASE+0x0021504C)
+#define AUX_MU_MCR_REG    (PBASE+0x00215050)
+#define AUX_MU_LSR_REG    (PBASE+0x00215054)
+#define AUX_MU_MSR_REG    (PBASE+0x00215058)
+#define AUX_MU_SCRATCH    (PBASE+0x0021505C)
+#define AUX_MU_CNTL_REG   (PBASE+0x00215060)
+#define AUX_MU_STAT_REG   (PBASE+0x00215064)
+#define AUX_MU_BAUD_REG   (PBASE+0x00215068)
 
-#endif /* BOOTSTRAP_H_ */
+#endif /* PERIPHERALS_H_ */
 
 /*
  * Copyright (c) 2016 Chris Schulenberg christopher.s.schulenberg@gmail.com

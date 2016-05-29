@@ -1,54 +1,34 @@
-
 /*
- * NAME
+ * systimer.c
  *
- *   uart05.c
- *
- * DESCRIPTION
- *
- *   This function sends a test pattern to the hardware UART
- *
- * PARAMETERS
- *
- *   None
- *
- * RETURN
- *
- *   Boolean status
- *
- * EXAMPLE
- *
- *   This program is not meant to be called by an operating system or other
- *   programs. Build and deploy to the target.
- *
- *  NOTES
- *
- *    Refactored from original to use a header file for the forward declaration
- *    of the bootstrap functions
+ *  Created on: May 29, 2016
+ *      Author: christopher.s.schulenberg@gmail.com
+ *      Modified from: https://github.com/BrianSidebotham/arm-tutorial-rpi/blob/master/part-3/arm012/rpi-systimer.h
  */
 
 #include <stdint.h>
-#include "bootstrap.h"
+#include "peripherals.h"
 #include "systimer.h"
 
-int notmain ( void )
+static rpi_sys_timer_t* rpiSystemTimer = (rpi_sys_timer_t*)RPI_SYSTIMER_BASE;
+
+rpi_sys_timer_t* RPI_GetSystemTimer(void)
 {
-  uint32_t counter = 0;
+    return rpiSystemTimer;
+}
 
-  // Initialize UART
-  uart_init();
+void RPI_WaitMicroSeconds( uint32_t us )
+{
+    volatile uint32_t ts = rpiSystemTimer->counter_lo;
 
-  // Cyclic Executive
-  while(1){
-      hexstring(counter);
-      counter++;
-      counter %= 8;
-      RPI_WaitMicroSeconds(1000000);
-  }
+    while( ( rpiSystemTimer->counter_lo - ts ) < us )
+    {
+        /* BLANK */
+    }
 }
 
 /*
- * Copyright 2016 Chris Schulenberg christopher.s.schulenberg@gmail.com
+ * Copyright (c) 2016 Chris Schulenberg christopher.s.schulenberg@gmail.com
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
