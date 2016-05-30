@@ -25,12 +25,9 @@ exec.o : exec.c
 
 periph.o : periph.c
 	$(ARMGNU)-gcc $(COPS) -c periph.c -o periph.o
-	
-systimer.o : systimer.c
-	$(ARMGNU)-gcc $(COPS) -c systimer.c -o systimer.o
 
-exec.bin : memmap start.o periph.o systimer.o exec.o 
-	$(ARMGNU)-ld start.o periph.o systimer.o exec.o -T memmap -o exec.elf
+exec.bin : memmap start.o periph.o exec.o 
+	$(ARMGNU)-ld start.o periph.o exec.o -T memmap -o exec.elf
 	$(ARMGNU)-objdump -D exec.elf > exec.list
 	$(ARMGNU)-objcopy exec.elf -O ihex exec.hex
 	$(ARMGNU)-objcopy exec.elf -O binary exec.bin

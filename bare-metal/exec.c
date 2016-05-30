@@ -2,7 +2,7 @@
 /*
  * NAME
  *
- *   uart05.c
+ *   exec.c
  *
  * DESCRIPTION
  *
@@ -33,18 +33,24 @@
 
 int notmain ( void )
 {
+  static rpi_sys_timer_t* rpiSystemTimer = (rpi_sys_timer_t*)RPI_SYSTIMER_BASE;
+  volatile uint32_t ts;
   uint32_t counter = 0;
 
   // Initialize UART
   uart_init();
 
-  // Cyclic Executive
-  while(1){
+  // 100 Hz Cyclic Executive
+  do {
+      ts = rpiSystemTimer->counter_lo;
       hexstring(counter);
       counter++;
       counter %= 8;
-      RPI_WaitMicroSeconds(1000000);
-  }
+
+      while( ( rpiSystemTimer->counter_lo - ts ) < 10000 ){
+          /* Wait out remainder of frame */
+      }
+  } while(1);
 }
 
 /*
